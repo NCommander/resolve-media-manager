@@ -22,9 +22,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import ffmpeg
+from media_manager.streams import Stream
 
-import pprint
+import ffmpeg
 
 class MediaFile(object):
     '''
@@ -33,9 +33,27 @@ class MediaFile(object):
     '''
 
     def __init__(self):
-        pass
+        self.streams = []
 
     def load_file(self, filename):
         '''Loads a file into the media manager'''
+        mf = MediaFile()
+
         file_probe = ffmpeg.probe(filename)
-        pprint.pprint(file_probe)
+
+        # Create a stream for each part of this file
+        for stream in file_probe['streams']:
+            ms = Stream()
+            ms.media_type = stream['codec_type']
+            ms.codec = stream['codec_name']
+            self.streams.append(ms)
+
+    def get_streams_by_type(self, media_type):
+        '''Returns all streams in this media file that match a given type'''
+        matching_streams = []
+
+        for stream in self.streams:
+            if stream.media_type == media_type:
+                matching_streams.append(stream)
+
+        return matching_streams

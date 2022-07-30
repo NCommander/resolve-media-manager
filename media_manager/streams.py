@@ -1,3 +1,4 @@
+# The representation of a stream in a media file
 
 # MIT License
 #
@@ -21,32 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import unittest
-
-from tests import XCONFIG_TEST_VIDEO
-
-from media_manager import MediaFile
-
-class TestMediaFile(unittest.TestCase):
-    '''Tests parsing a media files headers'''
-
-    def testOpeningMediaFile(self):
-        '''Can we load a media file successfully?'''
-        mf = MediaFile()
-        mf.load_file(XCONFIG_TEST_VIDEO)
-
-        self.assertEqual(len(mf.streams), 2)
-
-    def testStreamTypeLoading(self):
-        '''split streams into components'''
-        mf = MediaFile()
-        mf.load_file(XCONFIG_TEST_VIDEO)
-
-        streams = mf.get_streams_by_type("video")
-        self.assertEqual(len(streams), 1)
-
-        streams = mf.get_streams_by_type("audio")
-        self.assertEqual(len(streams), 1)
-
-        streams = mf.get_streams_by_type("doesnt-exist")
-        self.assertEqual(len(streams), 0)
+class Stream(object):
+    def __init__(self):
+        self.media_type = None
+        self.codec = None
