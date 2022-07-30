@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-#
-# setup.py - setuptools handler for Resolve Media Manager
-#
 # MIT License
 #
 # Copyright (c) 2022 Michael Casadevall
@@ -24,31 +21,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import argparse
 import os
-from setuptools import setup, find_packages
 
+def main():
+    print("DaVinci Resolve Media Manager 0.2")
+    print()
+    print("THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,")
+    print("EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES")
+    print("OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.")
+    print()
 
-def read(filename):
-    filepath = os.path.join(os.path.dirname(__file__), filename)
-    file = open(filepath, 'r')
-    return file.read()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('in_folder', help='Media to transcode to Resolve Format')
+    parser.add_argument('out_folder', help="Optimized media write location")
+    parser.add_argument('-n', dest='dry_run', action='store_true', default=False)
 
-setup(
-    name='Resolve Media Cooridinator',
-    version='0.2',
-    author='Michael Casadevall',
-    author_email='michael@casadevall.pro',
-    description='Brings Resolve media into a consistent format',
-    long_description=read('README.md'),
-    long_description_content_type="text/markdown",
-    license='MIT',
-    packages=find_packages(),
-    scripts=[],
-    entry_points={
-        'console_scripts': [
-            'dr-process = media_manager.tools.process:main'
-        ]
-    },
+    args = parser.parse_args()
 
-    install_requires=[],
-)
+    in_folder = os.path.abspath(os.path.normpath(args.in_folder))
+    out_folder = os.path.abspath(os.path.normpath(args.out_folder))
+
+    # Transcode planning goes here
+
+if __name__ == '__main__':
+    main()
