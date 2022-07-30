@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 # setup.py - setuptools handler for Resolve Media Manager
 #
 # MIT License
@@ -42,5 +44,5 @@ setup(
     license='MIT',
     packages=find_packages(),
     scripts=[],
-    install_requires=[]
+    install_requires=[],
 )
